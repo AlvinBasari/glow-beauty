@@ -206,3 +206,51 @@ function get_order_details_for_admin($order_id) {
 
  return $order_details;
 }
+
+// Fungsi untuk mendapatkan detail pesanan lengkap untuk user
+function get_user_order_details($order_id, $user_id) {
+ global $conn;
+ $order_id = (int)$order_id;
+ $user_id = (int)$user_id;
+ $order_details = null;
+
+ // 1. Ambil detail pesanan dan info user, pastikan user_id sesuai
+ $sql_order = "SELECT o.*, u.username, u.full_name, u.email, u.address, u.phone_number
+ FROM orders o
+ JOIN users u ON o.user_id = u.user_id
+ WHERE o.order_id = ? AND o.user_id = ?";
+ if ($stmt_order = $conn->prepare($sql_order)) {
+ $stmt_order->bind_param("ii", $order_id, $user_id);
+ if ($stmt_order->execute()) {
+ $result_order = $stmt_order->get_result();
+ if ($result_order->num_rows == 1) {
+ $order_details = $result_order->fetch_assoc();
+ }
+ }
+ $stmt_order->close();
+ }
+
+ // Jika pesanan tidak ditemukan, kembalikan null
+ if (!$order_details) {
+ return null;
+ }
+
+ // 2. Ambil item-item dalam pesanan tersebut
+ $sql_items = "SELECT oi.*, p.name AS product_name, p.image AS product_image
+ FROM order_items oi
+ JOIN products p ON oi.product_id = p.product_id
+ WHERE oi.order_id = ?";
+ $order_details['items'] = [];
+ if ($stmt_items = $conn->prepare($sql_items)) {
+ $stmt_items->bind_param("i", $order_id);
+ if ($stmt_items->execute()) {
+ $result_items = $stmt_items->get_result();
+ while ($row_item = $result_items->fetch_assoc()) {
+ $order_details['items'][] = $row_item;
+ }
+ }
+ $stmt_items->close();
+ }
+
+ return $order_details;
+}

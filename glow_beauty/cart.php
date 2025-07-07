@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  $new_quantity = $_SESSION['cart'][$product_id]['quantity'] + $quantity;
  // Batasi kuantitas maksimum sesuai stok
  if ($new_quantity > $product['stock']) {
- $message = "Stok produk "". htmlspecialchars($product['name']) ."" hanya tersedia ". $product['stock'] .".";
+ $message = "Stok produk "{".htmlspecialchars($product['name'])."}" hanya tersedia {".$product['stock']."}.";
  $new_quantity = $product['stock']; // Set kuantitas ke stok maksimum
  }
  $_SESSION['cart'][$product_id]['quantity'] = $new_quantity;
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  } else {
  // Jika produk belum ada, tambahkan item baru
  if ($quantity > $product['stock']) {
- $message = "Stok produk "". htmlspecialchars($product['name']) ."" hanya tersedia ". $product['stock'] .".";
+ $message = "Stok produk "{".htmlspecialchars($product['name'])."}" hanya tersedia {".$product['stock']."}.";
  $quantity = $product['stock']; // Set kuantitas ke stok maksimum
  }
  if ($quantity > 0) {
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  // Update kuantitas item di keranjang
  if (isset($_SESSION['cart'][$product_id])) {
  if ($quantity > $product['stock']) {
- $message = "Stok produk "". htmlspecialchars($_SESSION['cart'][$product_id]['name']) ."" hanya tersedia ". $product['stock'] .".";
+ $message = "Stok produk "{".htmlspecialchars($_SESSION['cart'][$product_id]['name'])."}" hanya tersedia {".$product['stock']."}.";
  $quantity = $product['stock']; // Set kuantitas ke stok maksimum
  }
  if ($quantity > 0) {
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  } else {
  // Jika kuantitas 0 atau kurang, hapus item
  unset($_SESSION['cart'][$product_id]);
- $message = "Produk "". htmlspecialchars($product['name']) ."" dihapus dari keranjang.";
+ $message = "Produk "".htmlspecialchars($product['name'])."" dihapus dari keranjang.";
  }
  }
  // Redirect untuk mencegah pengiriman form ganda
@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  // Hapus item dari keranjang
  if (isset($_SESSION['cart'][$product_id])) {
  unset($_SESSION['cart'][$product_id]);
- $message = "Produk "". htmlspecialchars($product['name']) ."" dihapus dari keranjang.";
+ $message = "Produk "".htmlspecialchars($product['name'])."" dihapus dari keranjang.";
  }
  // Redirect untuk mencegah pengiriman form ganda
  header('Location: cart.php');
