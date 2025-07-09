@@ -75,31 +75,21 @@ INSERT INTO `products` (`product_id`, `category_id`, `name`, `description`, `pri
 (3, 2, 'Matte Finish Foundation', 'Foundation dengan hasil akhir matte yang tahan lama sepanjang hari.', 350000.00, 40, 'foundation.jpg');
 
 --
--- Struktur Tabel untuk `orders`
+-- Struktur Tabel untuk `content`
 --
-CREATE TABLE `orders` (
-  `order_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `total_amount` decimal(10,2) NOT NULL,
-  `status` enum('pending','processing','shipped','completed','cancelled') NOT NULL DEFAULT 'pending',
-  PRIMARY KEY (`order_id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+CREATE TABLE `content` (
+  `content_id` int(11) NOT NULL AUTO_INCREMENT,
+  `page` varchar(50) NOT NULL,
+  `section` varchar(50) NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY (`content_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Struktur Tabel untuk `order_items`
+-- Data Contoh untuk `content`
 --
-CREATE TABLE `order_items` (
-  `order_item_id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`order_item_id`),
-  KEY `order_id` (`order_id`),
-  KEY `product_id` (`product_id`),
-  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE,
-  CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `content` (`content_id`, `page`, `section`, `content`) VALUES
+(1, 'home', 'hero', '<h1>Selamat Datang di Glow Beauty</h1><p>Temukan produk kecantikan terbaik untuk kulit Anda.</p>'),
+(2, 'about', 'description', '<p>Glow Beauty adalah toko online yang menyediakan berbagai macam produk kecantikan berkualitas.</p>'),
+(3, 'contact', 'address', '<p>Jl. Contoh No. 123, Kota ABC</p>'),
+(4, 'contact', 'email', '<p>info@glowbeauty.com</p>');

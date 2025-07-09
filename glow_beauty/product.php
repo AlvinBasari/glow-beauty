@@ -9,7 +9,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Glow Beauty</title>
+    <title>Glow Beauty - Product</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -104,39 +104,6 @@ if (session_status() == PHP_SESSION_NONE) {
             opacity: 0.9;
         }
 
-        .hero-features {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-top: 50px;
-            flex-wrap: wrap;
-        }
-
-        .feature-item {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #ffd700;
-        }
-
-        .feature-text {
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
         /* Main Content */
         .content-wrapper {
             background: #f8fafc;
@@ -159,7 +126,7 @@ if (session_status() == PHP_SESSION_NONE) {
             margin-bottom: 60px;
         }
 
-        /* Product Cards */
+                /* Product Cards */
         .product-card {
             background: white;
             border-radius: 20px;
@@ -331,58 +298,10 @@ if (session_status() == PHP_SESSION_NONE) {
                 font-size: 2.5rem;
             }
 
-            .hero-features {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .product-actions {
-                flex-direction: column;
-            }
-
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 30px;
             }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .product-card {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .product-card:nth-child(1) { animation-delay: 0.1s; }
-        .product-card:nth-child(2) { animation-delay: 0.2s; }
-        .product-card:nth-child(3) { animation-delay: 0.3s; }
-        .product-card:nth-child(4) { animation-delay: 0.4s; }
-        .product-card:nth-child(5) { animation-delay: 0.5s; }
-        .product-card:nth-child(6) { animation-delay: 0.6s; }
-
-        /* Loading Animation */
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -418,41 +337,14 @@ if (session_status() == PHP_SESSION_NONE) {
     <div class="container">
         <div class="hero-content">
             <?php
-            $home_hero_content = get_content('home', 'hero');
-            if ($home_hero_content) {
-                echo $home_hero_content;
+            $product_description_content = get_content('product', 'description');
+            if ($product_description_content) {
+                echo $product_description_content;
             } else {
-                echo '<h1><i class="fas fa-sparkles"></i> Welcome to Glow Beauty</h1>
-                      <p>Discover the best beauty products for your skin.</p>';
+                echo '<h1>Our Products</h1>
+                      <p>Discover our amazing beauty products.</p>';
             }
             ?>
-
-            <div class="hero-features">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <div class="feature-text">100% Natural</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <div class="feature-text">Premium Quality</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-shipping-fast"></i>
-                    </div>
-                    <div class="feature-text">Fast Delivery</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <div class="feature-text">Dermatologist Tested</div>
-                </div>
-            </div>
         </div>
     </div>
 </section>
@@ -460,10 +352,8 @@ if (session_status() == PHP_SESSION_NONE) {
 <!-- Content Wrapper -->
 <div class="content-wrapper">
     <div class="container">
-
-        <!-- Main Content -->
         <main>
-            <h2 class="section-title">Beauty Product Catalog</h2>
+        <h2 class="section-title">Beauty Product Catalog</h2>
             <p class="section-subtitle">Choose the best products for your beauty routine</p>
 
             <div class="row g-4" id="productGrid">
@@ -556,7 +446,6 @@ if (session_status() == PHP_SESSION_NONE) {
 
 <!-- Bootstrap 5 JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/script.js"></script>
 
 <script>
     // Smooth scroll for navbar links
@@ -567,15 +456,6 @@ if (session_status() == PHP_SESSION_NONE) {
                 behavior: 'smooth'
             });
         });
-    });
-
-    // Parallax effect for hero section
-    window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const hero = document.querySelector('.hero');
-        if (hero) {
-            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-        }
     });
 </script>
 </body>
